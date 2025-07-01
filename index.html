@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Creative Writing Assistant</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="control-panel">
+        <div class="panel-header">
+          <h2>✍️ Creative Control</h2>
+          <p>Choose your writing style and let AI inspire your creativity</p>
+        </div>
+
+        <div class="writing-type-section">
+          <h3>📚 Writing Types</h3>
+          <div class="writing-types">
+            <div class="type-card active" data-type="story">
+              <div class="type-icon">📖</div>
+              <div class="type-name">Short Story</div>
+            </div>
+            <div class="type-card" data-type="poem">
+              <div class="type-icon">🎭</div>
+              <div class="type-name">Poetry</div>
+            </div>
+            <div class="type-card" data-type="dialogue">
+              <div class="type-icon">💬</div>
+              <div class="type-name">Dialogue</div>
+            </div>
+            <div class="type-card" data-type="script">
+              <div class="type-icon">🎬</div>
+              <div class="type-name">Script</div>
+            </div>
+            <div class="type-card" data-type="letter">
+              <div class="type-icon">💌</div>
+              <div class="type-name">Letter</div>
+            </div>
+            <div class="type-card" data-type="monologue">
+              <div class="type-icon">🎤</div>
+              <div class="type-name">Monologue</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <h3>🎨 Creative Settings</h3>
+
+          <div class="form-group">
+            <label for="theme">Theme/Topic:</label>
+            <input
+              type="text"
+              id="theme"
+              placeholder="e.g., Love, Adventure, Mystery"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="genre">Genre:</label>
+            <select id="genre">
+              <option value="any">Any Genre</option>
+              <option value="romance">Romance</option>
+              <option value="mystery">Mystery</option>
+              <option value="fantasy">Fantasy</option>
+              <option value="scifi">Science Fiction</option>
+              <option value="horror">Horror</option>
+              <option value="comedy">Comedy</option>
+              <option value="drama">Drama</option>
+              <option value="thriller">Thriller</option>
+              <option value="historical">Historical</option>
+              <option value="contemporary">Contemporary</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="tone">Tone:</label>
+            <select id="tone">
+              <option value="neutral">Neutral</option>
+              <option value="lighthearted">Lighthearted</option>
+              <option value="serious">Serious</option>
+              <option value="humorous">Humorous</option>
+              <option value="romantic">Romantic</option>
+              <option value="dark">Dark</option>
+              <option value="inspirational">Inspirational</option>
+              <option value="melancholic">Melancholic</option>
+              <option value="suspenseful">Suspenseful</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="length">Length:</label>
+            <select id="length">
+              <option value="short">Short (100-300 words)</option>
+              <option value="medium" selected>Medium (300-600 words)</option>
+              <option value="long">Long (600-1000 words)</option>
+              <option value="extended">Extended (1000+ words)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="characters">Characters/Elements:</label>
+            <textarea
+              id="characters"
+              placeholder="Describe main characters, setting, or specific elements you want included..."
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="api-section">
+          <h3>🔧 API Configuration</h3>
+          <div class="form-group">
+            <label for="apiKey">OpenAI API Key:</label>
+            <input
+              type="password"
+              id="apiKey"
+              placeholder="Enter your OpenAI API Key"
+            />
+          </div>
+        </div>
+
+        <button class="create-btn" id="createBtn" onclick="createWriting()">
+          ✨ Create Writing
+        </button>
+
+        <div class="inspiration-section">
+          <h3>💡 Quick Inspiration</h3>
+          <div class="inspiration-chips">
+            <span
+              class="inspiration-chip"
+              onclick="setInspiration('Lost in a magical forest')"
+              >Magical Forest</span
+            >
+            <span
+              class="inspiration-chip"
+              onclick="setInspiration('Time traveler meets ancestor')"
+              >Time Travel</span
+            >
+            <span
+              class="inspiration-chip"
+              onclick="setInspiration('Robot learns to love')"
+              >AI Romance</span
+            >
+            <span
+              class="inspiration-chip"
+              onclick="setInspiration('Last person on Earth')"
+              >Apocalypse</span
+            >
+            <span
+              class="inspiration-chip"
+              onclick="setInspiration('Talking animals save the world')"
+              >Animal Heroes</span
+            >
+            <span
+              class="inspiration-chip"
+              onclick="setInspiration('Detective solving impossible case')"
+              >Mystery</span
+            >
+            <span
+              class="inspiration-chip"
+              onclick="setInspiration('Dragon befriends lonely child')"
+              >Fantasy</span
+            >
+            <span
+              class="inspiration-chip"
+              onclick="setInspiration('Memory thief steals happiness')"
+              >Dark Fantasy</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="main-content">
+        <div class="content-header">
+          <h1>🎨 AI Creative Writing Assistant</h1>
+          <p>Unleash your imagination with AI-powered creative writing</p>
+        </div>
+
+        <div class="current-type-display" id="currentTypeDisplay">
+          📖 Short Story Mode
+        </div>
+
+        <div class="error-message" id="errorMessage"></div>
+
+        <div class="writing-area">
+          <div class="output-container" id="outputContainer">
+            <div class="empty-state">
+              <div class="empty-state-icon">✍️</div>
+              <h3>Ready to Create Something Amazing!</h3>
+              <p>
+                Choose your writing type, set your creative preferences, and let
+                AI help you craft beautiful stories, poems, and scripts.<br /><br />
+                Whether you need inspiration for a short story, help with
+                poetry, or want to explore creative dialogue, I'm here to be
+                your creative partner.
+              </p>
+            </div>
+
+            <div class="loading" id="loadingDiv">
+              <div class="typewriter">✍️</div>
+              <div class="loading-text">
+                Crafting your creative content...<br />Channeling inspiration
+                and imagination
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
